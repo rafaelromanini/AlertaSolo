@@ -65,7 +65,7 @@ dotnet run
 
 4. Acesse:
 ```
-https://localhost:7177/swagger
+https://localhost:5276/swagger
 ```
 
 ---
