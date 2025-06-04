@@ -18,26 +18,40 @@ namespace AlertaSolo.Services
 
         public async Task<IEnumerable<LocalRiscoDTO>> GetAllAsync()
         {
-            return await _context.LocaisRisco
-                .Select(l => new LocalRiscoDTO
-                {
-                    Id = l.Id,
-                    NomeLocal = l.NomeLocal,
-                    Latitude = l.Latitude,
-                    Longitude = l.Longitude,
-                    Cidade = l.Cidade,
-                    Uf = l.Uf,
-                    GrauRisco = l.GrauRisco,
-                    Ativo = l.Ativo,
-                    UsuarioId = l.UsuarioId
-                })
+            var locais = await _context.LocaisRisco
+                .Include(l => l.Sensores)
                 .ToListAsync();
+
+            return locais.Select(l => new LocalRiscoDTO
+            {
+                Id = l.Id,
+                NomeLocal = l.NomeLocal,
+                Latitude = l.Latitude,
+                Longitude = l.Longitude,
+                Cidade = l.Cidade,
+                Uf = l.Uf,
+                GrauRisco = l.GrauRisco,
+                Ativo = l.Ativo,
+                Sensores = l.Sensores?.Select(s => new SensorDTO
+                {
+                    Id = s.Id,
+                    CodigoEsp32 = s.CodigoEsp32,
+                    Status = s.Status,
+                    TipoSensor = s.TipoSensor,
+                    DataInstalacao = s.DataInstalacao,
+                    QntdAlertas = s.QntdAlertas,
+                    LocalRiscoId = s.LocalRiscoId,
+                    LocalRisco = null
+                }).ToList()
+            });
         }
 
         public async Task<LocalRiscoDTO> GetByIdAsync(int id)
         {
-            var l = await _context.LocaisRisco.FindAsync(id)
-                    ?? throw new LocalRiscoException("Local de risco não encontrado.");
+            var l = await _context.LocaisRisco
+                .Include(l => l.Sensores)
+                .FirstOrDefaultAsync(l => l.Id == id)
+                ?? throw new LocalRiscoException("Local de risco não encontrado.");
 
             return new LocalRiscoDTO
             {
@@ -49,7 +63,17 @@ namespace AlertaSolo.Services
                 Uf = l.Uf,
                 GrauRisco = l.GrauRisco,
                 Ativo = l.Ativo,
-                UsuarioId = l.UsuarioId
+                Sensores = l.Sensores?.Select(s => new SensorDTO
+                {
+                    Id = s.Id,
+                    CodigoEsp32 = s.CodigoEsp32,
+                    Status = s.Status,
+                    TipoSensor = s.TipoSensor,
+                    DataInstalacao = s.DataInstalacao,
+                    QntdAlertas = s.QntdAlertas,
+                    LocalRiscoId = s.LocalRiscoId,
+                    LocalRisco = null
+                }).ToList()
             };
         }
 
@@ -64,7 +88,6 @@ namespace AlertaSolo.Services
                 Uf = dto.Uf,
                 GrauRisco = dto.GrauRisco,
                 Ativo = dto.Ativo,
-                UsuarioId = dto.UsuarioId
             };
 
             _context.LocaisRisco.Add(local);
@@ -77,13 +100,26 @@ namespace AlertaSolo.Services
             var local = await _context.LocaisRisco.FindAsync(id)
                          ?? throw new LocalRiscoException("Local de risco não encontrado para atualização.");
 
-            local.NomeLocal = dto.NomeLocal;
-            local.Latitude = dto.Latitude;
-            local.Longitude = dto.Longitude;
-            local.Cidade = dto.Cidade;
-            local.Uf = dto.Uf;
-            local.GrauRisco = dto.GrauRisco;
-            local.Ativo = dto.Ativo;
+            if (!string.IsNullOrEmpty(dto.NomeLocal))
+                local.NomeLocal = dto.NomeLocal;
+
+            if (!string.IsNullOrEmpty(dto.Latitude))
+                local.Latitude = dto.Latitude;
+
+            if (!string.IsNullOrEmpty(dto.Longitude))
+                local.Longitude = dto.Longitude;
+
+            if (!string.IsNullOrEmpty(dto.Cidade))
+                local.Cidade = dto.Cidade;
+
+            if (!string.IsNullOrEmpty(dto.Uf))
+                local.Uf = dto.Uf;
+
+            if (dto.GrauRisco.HasValue)
+                local.GrauRisco = dto.GrauRisco.Value;
+
+            if (dto.Ativo.HasValue)
+                local.Ativo = dto.Ativo.Value;
 
             _context.LocaisRisco.Update(local);
             await _context.SaveChangesAsync();

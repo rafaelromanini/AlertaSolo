@@ -12,7 +12,7 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace AlertaSolo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250601203623_InitialCreate")]
+    [Migration("20250603230317_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -64,12 +64,7 @@ namespace AlertaSolo.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("NVARCHAR2(2)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("NUMBER(10)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("LocalRisco", (string)null);
                 });
@@ -162,17 +157,6 @@ namespace AlertaSolo.Migrations
                     b.ToTable("Usuario", (string)null);
                 });
 
-            modelBuilder.Entity("AlertaSolo.Model.LocalRisco", b =>
-                {
-                    b.HasOne("AlertaSolo.Model.Usuario", "Usuario")
-                        .WithMany("LocaisRisco")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("AlertaSolo.Model.Sensor", b =>
                 {
                     b.HasOne("AlertaSolo.Model.LocalRisco", "LocalRisco")
@@ -187,11 +171,6 @@ namespace AlertaSolo.Migrations
             modelBuilder.Entity("AlertaSolo.Model.LocalRisco", b =>
                 {
                     b.Navigation("Sensores");
-                });
-
-            modelBuilder.Entity("AlertaSolo.Model.Usuario", b =>
-                {
-                    b.Navigation("LocaisRisco");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,9 +11,6 @@
         public int GrauRisco { get; set; }
         public bool Ativo { get; set; }
 
-        public int UsuarioId { get; set; }
-        public Usuario Usuario { get; set; }
-
         public ICollection<Sensor> Sensores { get; set; }
     }
 }

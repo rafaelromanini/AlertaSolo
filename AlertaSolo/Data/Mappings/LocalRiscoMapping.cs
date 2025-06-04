@@ -22,10 +22,6 @@ namespace AlertaSolo.Data.Mappings
             builder.Property(l => l.Ativo)
                    .IsRequired()
                    .HasConversion<int>();
-
-            builder.HasOne(l => l.Usuario)
-                   .WithMany(u => u.LocaisRisco)
-                   .HasForeignKey(l => l.UsuarioId);
         }
     }
 }

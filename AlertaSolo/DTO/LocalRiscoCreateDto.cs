@@ -9,6 +9,5 @@
         public string Uf { get; set; }
         public int GrauRisco { get; set; }
         public bool Ativo { get; set; }
-        public int UsuarioId { get; set; }
     }
 }

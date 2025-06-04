@@ -1,4 +1,6 @@
-﻿namespace AlertaSolo.DTO
+﻿using System.Text.Json.Serialization;
+
+namespace AlertaSolo.DTO
 {
     public class LocalRiscoDTO
     {
@@ -10,6 +12,8 @@
         public string Uf { get; set; }
         public int GrauRisco { get; set; }
         public bool Ativo { get; set; }
-        public int UsuarioId { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<SensorDTO> Sensores { get; set; }
     }
 }

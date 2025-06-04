@@ -19,6 +19,7 @@ namespace AlertaSolo.Services
         public async Task<IEnumerable<SensorDTO>> GetAllAsync()
         {
             return await _context.Sensores
+                .Include(s => s.LocalRisco)
                 .Select(s => new SensorDTO
                 {
                     Id = s.Id,
@@ -27,15 +28,29 @@ namespace AlertaSolo.Services
                     TipoSensor = s.TipoSensor,
                     DataInstalacao = s.DataInstalacao,
                     QntdAlertas = s.QntdAlertas,
-                    LocalRiscoId = s.LocalRiscoId
+                    LocalRiscoId = s.LocalRiscoId,
+                    LocalRisco = new LocalRiscoDTO
+                    {
+                        Id = s.LocalRisco.Id,
+                        NomeLocal = s.LocalRisco.NomeLocal,
+                        Latitude = s.LocalRisco.Latitude,
+                        Longitude = s.LocalRisco.Longitude,
+                        Cidade = s.LocalRisco.Cidade,
+                        Uf = s.LocalRisco.Uf,
+                        GrauRisco = s.LocalRisco.GrauRisco,
+                        Ativo = s.LocalRisco.Ativo,
+                        Sensores = null
+                    }
                 })
                 .ToListAsync();
         }
 
         public async Task<SensorDTO> GetByIdAsync(int id)
         {
-            var s = await _context.Sensores.FindAsync(id)
-                     ?? throw new SensorException("Sensor não encontrado.");
+            var s = await _context.Sensores
+                .Include(s => s.LocalRisco)
+                .FirstOrDefaultAsync(s => s.Id == id)
+                ?? throw new SensorException("Sensor não encontrado.");
 
             return new SensorDTO
             {
@@ -45,7 +60,19 @@ namespace AlertaSolo.Services
                 TipoSensor = s.TipoSensor,
                 DataInstalacao = s.DataInstalacao,
                 QntdAlertas = s.QntdAlertas,
-                LocalRiscoId = s.LocalRiscoId
+                LocalRiscoId = s.LocalRiscoId,
+                LocalRisco = new LocalRiscoDTO
+                {
+                    Id = s.LocalRisco.Id,
+                    NomeLocal = s.LocalRisco.NomeLocal,
+                    Latitude = s.LocalRisco.Latitude,
+                    Longitude = s.LocalRisco.Longitude,
+                    Cidade = s.LocalRisco.Cidade,
+                    Uf = s.LocalRisco.Uf,
+                    GrauRisco = s.LocalRisco.GrauRisco,
+                    Ativo = s.LocalRisco.Ativo,
+                    Sensores = null
+                }
             };
         }
 
@@ -70,9 +97,14 @@ namespace AlertaSolo.Services
             var sensor = await _context.Sensores.FindAsync(id)
                           ?? throw new SensorException("Sensor não encontrado para atualização.");
 
-            sensor.Status = dto.Status;
-            sensor.TipoSensor = dto.TipoSensor;
-            sensor.QntdAlertas = dto.QntdAlertas;
+            if (!string.IsNullOrEmpty(dto.Status))
+                sensor.Status = dto.Status;
+
+            if (!string.IsNullOrEmpty(dto.TipoSensor))
+                sensor.TipoSensor = dto.TipoSensor;
+
+            if (dto.QntdAlertas.HasValue)
+                sensor.QntdAlertas = dto.QntdAlertas.Value;
 
             _context.Sensores.Update(sensor);
             await _context.SaveChangesAsync();

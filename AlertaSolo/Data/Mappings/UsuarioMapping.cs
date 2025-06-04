@@ -20,10 +20,6 @@ namespace AlertaSolo.Data.Mappings
             builder.Property(u => u.Email).IsRequired().HasMaxLength(100);
             builder.Property(u => u.Senha).IsRequired().HasMaxLength(100);
             builder.Property(u => u.DataCadastro).IsRequired();
-
-            builder.HasMany(u => u.LocaisRisco)
-                   .WithOne(l => l.Usuario)
-                   .HasForeignKey(l => l.UsuarioId);
         }
     }
 }

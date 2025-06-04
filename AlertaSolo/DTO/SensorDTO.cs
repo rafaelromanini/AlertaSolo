@@ -1,4 +1,7 @@
-﻿namespace AlertaSolo.DTO
+﻿using System;
+using System.Text.Json.Serialization;
+
+namespace AlertaSolo.DTO
 {
     public class SensorDTO
     {
@@ -9,5 +12,8 @@
         public DateTime DataInstalacao { get; set; }
         public int QntdAlertas { get; set; }
         public int LocalRiscoId { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public LocalRiscoDTO LocalRisco { get; set; }
     }
 }

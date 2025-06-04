@@ -75,16 +75,26 @@ namespace AlertaSolo.Services
             var usuario = await _context.Usuarios.FindAsync(id)
                           ?? throw new UsuarioException("Usuário não encontrado para atualização.");
 
-            usuario.Nome = dto.Nome;
-            usuario.Idade = dto.Idade;
-            usuario.Cidade = dto.Cidade;
-            usuario.Uf = dto.Uf;
-            usuario.Email = dto.Email;
+            if (!string.IsNullOrEmpty(dto.Nome))
+                usuario.Nome = dto.Nome;
+
+            if (dto.Idade.HasValue)
+                usuario.Idade = dto.Idade.Value;
+
+            if (!string.IsNullOrEmpty(dto.Cidade))
+                usuario.Cidade = dto.Cidade;
+
+            if (!string.IsNullOrEmpty(dto.Uf))
+                usuario.Uf = dto.Uf;
+
+            if (!string.IsNullOrEmpty(dto.Email))
+                usuario.Email = dto.Email;
 
             _context.Usuarios.Update(usuario);
             await _context.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<bool> DeleteAsync(int id)
         {

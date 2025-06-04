@@ -12,6 +12,25 @@ namespace AlertaSolo.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "LocalRisco",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    NomeLocal = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
+                    Latitude = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    Longitude = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    Cidade = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    Uf = table.Column<string>(type: "NVARCHAR2(2)", maxLength: 2, nullable: false),
+                    GrauRisco = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    Ativo = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LocalRisco", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -29,32 +48,6 @@ namespace AlertaSolo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LocalRisco",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    NomeLocal = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
-                    Latitude = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
-                    Longitude = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
-                    Cidade = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
-                    Uf = table.Column<string>(type: "NVARCHAR2(2)", maxLength: 2, nullable: false),
-                    GrauRisco = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    Ativo = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    UsuarioId = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LocalRisco", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LocalRisco_Usuario_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,11 +75,6 @@ namespace AlertaSolo.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_LocalRisco_UsuarioId",
-                table: "LocalRisco",
-                column: "UsuarioId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Sensor_LocalRiscoId",
                 table: "Sensor",
                 column: "LocalRiscoId");
@@ -99,10 +87,10 @@ namespace AlertaSolo.Migrations
                 name: "Sensor");
 
             migrationBuilder.DropTable(
-                name: "LocalRisco");
+                name: "Usuario");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
+                name: "LocalRisco");
         }
     }
 }
