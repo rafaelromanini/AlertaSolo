@@ -123,11 +123,17 @@ https://localhost:5276/swagger
 }
 ```
 
+<img src='assets/user-images/postUser.jpg' alt='Post User'>
+
 #### 📄 Listar todos
 `GET /api/usuario`
 
+<img src='assets/user-images/getAllUser.jpg' alt='Get All User'>
+
 #### 🔍 Buscar por ID
 `GET /api/usuario/{id}`
+
+<img src='assets/user-images/getByIdUser.jpg' alt='Get By Id User'>
 
 #### ✏️ Atualizar
 `PUT /api/usuario/{id}`
@@ -141,8 +147,12 @@ https://localhost:5276/swagger
 }
 ```
 
+<img src='assets/user-images/putUser.jpg' alt='Put User'>
+
 #### 🗑️ Deletar
 `DELETE /api/usuario/{id}`
+
+<img src='assets/user-images/deleteUser.jpg' alt='Delete User'>
 
 ---
 
@@ -163,11 +173,17 @@ https://localhost:5276/swagger
 }
 ```
 
+<img src='assets/localRisco-images/postLocalRisco.jpg' alt='Post Local Risco'>
+
 #### 📄 Listar todos
 `GET /api/localrisco`
 
+<img src='assets/localRisco-images/getAllLocalRisco.jpg' alt='Get All Local Risco'>
+
 #### 🔍 Buscar por ID
 `GET /api/localrisco/{id}`
+
+<img src='assets/localRisco-images/getByIdLocalRisco.jpg' alt='Get By Id Local Risco'>
 
 #### ✏️ Atualizar
 `PUT /api/localrisco/{id}`
@@ -183,8 +199,12 @@ https://localhost:5276/swagger
 }
 ```
 
+<img src='assets/localRisco-images/putLocalRisco.jpg' alt='Put Local Risco'>
+
 #### 🗑️ Deletar
 `DELETE /api/localrisco/{id}`
+
+<img src='assets/localRisco-images/deleteLocalRisco.jpg' alt='Delete Local Risco'>
 
 ---
 
@@ -202,11 +222,17 @@ https://localhost:5276/swagger
 }
 ```
 
+<img src='assets/sensor-images/postSensor.jpg' alt='Post Sensor'>
+
 #### 📄 Listar todos
 `GET /api/sensor`
 
+<img src='assets/sensor-images/getAllSensor.jpg' alt='Get All Sensor'>
+
 #### 🔍 Buscar por ID
 `GET /api/sensor/{id}`
+
+<img src='assets/sensor-images/getByIdSensor.jpg' alt='Get By Id Sensor'>
 
 #### ✏️ Atualizar
 `PUT /api/sensor/{id}`
@@ -218,8 +244,12 @@ https://localhost:5276/swagger
 }
 ```
 
+<img src='assets/sensor-images/putSensor.jpg' alt='Put Sensor'>
+
 #### 🗑️ Deletar
 `DELETE /api/sensor/{id}`
+
+<img src='assets/sensor-images/deleteSensor.jpg' alt='Post Sensor'>
 
 ---
 
