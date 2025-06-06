@@ -1,0 +1,53 @@
+﻿@page
+@model AlertaSolo.Pages.Sensores.IndexModel
+@{
+    ViewData["Title"] = "Sensores";
+}
+
+<h2>Lista de Sensores</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ESP32</th>
+            <th>Status</th>
+            <th>Tipo</th>
+            <th>Local</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sensor in Model.Sensores)
+        {
+            <tr>
+                <td>@sensor.CodigoEsp32</td>
+                <td>@sensor.Status</td>
+                <td>@sensor.TipoSensor</td>
+                <td>@sensor.LocalRisco?.NomeLocal</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Novo Sensor</h3>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="NovoSensor.CodigoEsp32"></label>
+        <input asp-for="NovoSensor.CodigoEsp32" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NovoSensor.Status"></label>
+        <input asp-for="NovoSensor.Status" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NovoSensor.TipoSensor"></label>
+        <input asp-for="NovoSensor.TipoSensor" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NovoSensor.LocalRiscoId">Local de Risco</label>
+        <select asp-for="NovoSensor.LocalRiscoId" class="form-control" asp-items="Model.LocaisSelectList">
+            <option value="">Selecione...</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
