@@ -33,6 +33,22 @@ API RESTful desenvolvida em .NET para monitoramento de áreas com risco de desli
 
 ---
 
+## 🧱 Desenvolvimento da Solução
+O projeto AlertaSolo foi desenvolvido utilizando a arquitetura em camadas com boas práticas de programação e organização. A solução é composta por uma API RESTful desenvolvida em .NET 7, responsável por gerenciar as entidades do sistema: Usuários, Locais de Risco e Sensores conectados a dispositivos ESP32.
+
+A comunicação entre os sensores e a API ocorre via protocolo HTTP, simulando o envio de dados ambientais como umidade, tremor e inclinação. Esses dados são processados pela API e armazenados em um banco de dados Oracle, utilizando Entity Framework Core para o mapeamento e manipulação das tabelas.
+
+A aplicação também conta com uma interface web utilizando Razor Pages com TagHelpers, permitindo a visualização de dados e o cadastro de novos sensores diretamente pelo navegador. O sistema foi estruturado para facilitar futuras integrações com notificações automáticas e visualizações em dashboards.
+
+Todo o código foi separado por responsabilidades: controladores para rotas, services para regras de negócio, models para representação das entidades e DTOs para segurança e clareza nas requisições. Isso garante um projeto escalável, testável e de fácil manutenção.
+
+---
+
+## 📐 Diagrama
+![image](https://github.com/user-attachments/assets/f973ffb7-352f-42cf-871f-1059b8e2b85e)
+
+---
+
 ## 🗂️ Estrutura de Pastas
 
 ```
@@ -45,6 +61,10 @@ AlertaSolo/
 ├── Data/
 │   ├── Mappings/          # Mapeamentos do EF Core (Fluent API)
 │   └── Exceptions/        # Exceptions personalizadas
+├── Pages/                 # Uso de Razor e TagHelpers
+│   ├── Sensores/          # Pages Sensores 
+│      ├── Index.cshtml/   # Página Razor para exibir dados dos sensores (HTML + TagHelpers)
+│      ├── Index.cshtml.cs # Código C# vinculado à página Razor (handler de requisições e lógica)
 ├── Migrations/            # Migrations do EF Core
 ├── appsettings.json       # Configuração de conexão
 └── Program.cs             # Inicialização do projeto
@@ -65,7 +85,8 @@ dotnet run
 
 4. Acesse:
 ```
-https://localhost:5276/swagger
+https://localhost:7177/swagger
+https://localhost:7177/Sensores
 ```
 
 ---
@@ -92,7 +113,6 @@ https://localhost:5276/swagger
 - uf
 - grauRisco
 - ativo
-- usuarioId
 
 ### Sensor
 - id
