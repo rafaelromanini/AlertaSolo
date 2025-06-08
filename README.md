@@ -11,7 +11,6 @@ API RESTful desenvolvida em .NET para monitoramento de áreas com risco de desli
 - ✅ Oracle Database (FIAP)
 - ✅ Swagger (Swashbuckle)
 - ✅ RESTful API Architecture
-- ✅ Docker (futuramente para deploy)
 - ✅ Visual Studio / CLI
 
 ---
